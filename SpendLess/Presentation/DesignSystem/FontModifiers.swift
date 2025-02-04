@@ -9,110 +9,134 @@ import SwiftUI
 
 
 struct DisplayLarge: ViewModifier {
+    var color: Color = Color.black
+    
     func body(content: Content) -> some View {
         content
             .font(Font.custom("Figtree-SemiBold", size: 45))
             .lineSpacing(52)
-            .foregroundStyle(.black)
+            .foregroundStyle(color)
     }
 }
 
 struct DisplayMedium: ViewModifier {
+    var color: Color = Color.black
+    
     func body(content: Content) -> some View {
         content
             .font(Font.custom("Figtree-SemiBold", size: 36))
             .lineSpacing(44)
-            .foregroundStyle(.black)
+            .foregroundStyle(color)
     }
 }
 
 struct HeadlineLarge: ViewModifier {
+    var color: Color = Color.black
+    
     func body(content: Content) -> some View {
         content
             .font(Font.custom("Figtree-SemiBold", size: 32))
             .lineSpacing(40)
-            .foregroundStyle(.black)
+            .foregroundStyle(color)
     }
 }
 
 struct HeadlineMedium: ViewModifier {
+    var color: Color = Color.black
+    
     func body(content: Content) -> some View {
         content
             .font(Font.custom("Figtree-SemiBold", size: 28))
             .lineSpacing(34)
-            .foregroundStyle(.black)
+            .foregroundStyle(color)
     }
 }
 
 
 struct TitleLarge: ViewModifier {
+    var color: Color = Color.black
+    
     func body(content: Content) -> some View {
         content
             .font(Font.custom("Figtree-SemiBold", size: 20))
             .lineSpacing(26)
-            .foregroundStyle(.black)
+            .foregroundStyle(color)
     }
 }
 
 struct TitleMedium: ViewModifier {
+    var color: Color = Color.black
+    
     func body(content: Content) -> some View {
         content
             .font(Font.custom("Figtree-SemiBold", size: 16))
             .lineSpacing(24)
-            .foregroundStyle(.black)
+            .foregroundStyle(color)
     }
 }
 
 struct TitleSmall: ViewModifier {
+    var color: Color = Color.black
+    
     func body(content: Content) -> some View {
         content
             .font(Font.custom("Figtree-Medium", size: 14))
             .lineSpacing(20)
-            .foregroundStyle(.black)
+            .foregroundStyle(color)
     }
 }
 
 struct LabelMedium: ViewModifier {
+    var color: Color = Color.black
+    
     func body(content: Content) -> some View {
         content
             .font(Font.custom("Figtree-Medium", size: 16))
             .lineSpacing(24)
-            .foregroundStyle(.black)
+            .foregroundStyle(color)
     }
 }
 
 struct LabelSmall: ViewModifier {
+    var color: Color = Color.black
+    
     func body(content: Content) -> some View {
         content
             .font(Font.custom("Figtree-Medium", size: 14))
             .lineSpacing(20)
-            .foregroundStyle(.black)
+            .foregroundStyle(color)
     }
 }
 
 struct BodyMedium: ViewModifier {
+    var color: Color = Color.black
+    
     func body(content: Content) -> some View {
         content
             .font(Font.custom("Figtree-Regular", size: 16))
             .lineSpacing(24)
-            .foregroundStyle(.black)
+            .foregroundStyle(color)
     }
 }
 
 struct BodySmall: ViewModifier {
+    var color: Color = Color.black
+    
     func body(content: Content) -> some View {
         content
             .font(Font.custom("Figtree-Regular", size: 14))
             .lineSpacing(20)
-            .foregroundStyle(.black)
+            .foregroundStyle(color)
     }
 }
 
 struct BodyXSmall: ViewModifier {
+    var color: Color = Color.black
+    
     func body(content: Content) -> some View {
         content
             .font(Font.custom("Figtree-Regular", size: 12))
             .lineSpacing(16)
-            .foregroundStyle(.black)
+            .foregroundStyle(color)
     }
 }
