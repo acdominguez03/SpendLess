@@ -39,11 +39,11 @@ struct LoginView: View {
                 Text("Add")
             }
             
-            Banner()
+            /*Banner()
                 .padding(.bottom, 24)
                 .frame(maxHeight: .infinity, alignment: .bottom)
                 .offset(y: isTextFieldFocused ? -keyboardObserver.keyboardHeight + 24 : 0)
-                .animation(.easeInOut, value: isTextFieldFocused)
+                .animation(.easeInOut, value: isTextFieldFocused)*/
         }
         .ignoresSafeArea(.keyboard, edges: .bottom)
         .ignoresSafeArea(edges: .bottom)

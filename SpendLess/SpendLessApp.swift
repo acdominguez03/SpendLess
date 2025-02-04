@@ -27,7 +27,7 @@ struct SpendLessApp: App {
 
     var body: some Scene {
         WindowGroup {
-            LoginView()
+            UsernameView()
         }
         .modelContainer(sharedModelContainer)
     }
