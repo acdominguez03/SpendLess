@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct Banner: View {
-    let isError: Bool = true
-    let error: String = "This username has already been taken"
+    var isError: Bool = true
+    var error: String
     
     var body: some View {
         Text(error)
@@ -22,5 +22,5 @@ struct Banner: View {
 }
 
 #Preview {
-    Banner()
+    Banner(error: "This username has already been taken")
 }

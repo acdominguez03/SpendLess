@@ -47,7 +47,6 @@ struct HeadlineMedium: ViewModifier {
     func body(content: Content) -> some View {
         content
             .font(Font.custom("Figtree-SemiBold", size: 28))
-            .lineSpacing(34)
             .foregroundStyle(color)
     }
 }
