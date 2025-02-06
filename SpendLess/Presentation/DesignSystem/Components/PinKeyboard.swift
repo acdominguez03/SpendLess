@@ -9,7 +9,7 @@ import SwiftUI
 
 struct PinKeyboard: View {
     
-    let numbers = (0...11)
+    let numbers = (1...12)
     let columns = Array(repeating: GridItem(.flexible()), count: 3)
     
     var onClickNumberButton: (String) -> Void = {_ in }
@@ -31,23 +31,23 @@ struct PinKeyboard: View {
         
         LazyVGrid(columns: columns, spacing: 4) {
             ForEach(numbers, id: \.self) { number in
-                if number == 9 {
+                if number == 10 {
                     Color.clear
-                } else if number < 9 {
+                } else if number < 10 {
                     NumberButton(
                         number: String(number),
                         onClick: {
                             onClickNumberButton(String(number))
                         }
                     )
-                } else if (number == 10) {
+                } else if (number == 11) {
                     NumberButton(
                         number: "0",
                         onClick: {
                             onClickNumberButton("0")
                         }
                     )
-                } else if (number == 11) {
+                } else if (number == 12) {
                     DeleteButton(onClick: {
                         onClickDeleteButton()
                     })

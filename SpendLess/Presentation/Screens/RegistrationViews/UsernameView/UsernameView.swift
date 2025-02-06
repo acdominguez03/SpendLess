@@ -58,11 +58,6 @@ struct UsernameView: View {
                     onClick: {
                         isTextFieldFocused = false
                         viewModel.checkUsername()
-                        if viewModel.navigateToPinScreen {
-                            DispatchQueue.main.async {
-                                path.append(Screen.PinScreen)
-                            }
-                        }
                     }
                 )
                 
@@ -90,13 +85,16 @@ struct UsernameView: View {
             }
             .navigationDestination(for: Screen.self) { screen in
                 switch screen {
-                case .PinScreen:
+                case .CreatePinScreen:
                     CreatePinView(path: $path)
                 case .RepeatPinScreen:
                     RepeatPinView(path: $path)
-                case .PreferencesScreen:
-                    PreferencesView()
+                case .OnboardingPreferencesScreen:
+                    OnboardingPreferencesView(path: $path)
                 }
+            }
+            .onAppear {
+                viewModel.path = $path
             }
             .onDisappear {
                 DispatchQueue.main.async {

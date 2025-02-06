@@ -15,9 +15,7 @@ struct CreatePinView: View {
         VStack {
             ZStack(alignment: .top) {
                 BackButton {
-                    if !path.isEmpty {
-                        path.removeLast()
-                    }
+                    viewModel.backButtonPressed()
                 }
 
                 AppIcon()

@@ -22,7 +22,7 @@ import SwiftUI
         if pin.count == 5 {
             if pin == UserDefaultsManager.shared.pin {
                 DispatchQueue.main.async {
-                    self.path?.wrappedValue.append(Screen.PreferencesScreen)
+                    self.path?.wrappedValue.append(Screen.OnboardingPreferencesScreen)
                 }
             } else {
                 showError = true
