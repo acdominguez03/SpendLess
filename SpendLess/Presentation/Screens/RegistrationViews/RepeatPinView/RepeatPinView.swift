@@ -1,23 +1,21 @@
 //
-//  CreatePinView.swift
+//  RepeatPinView.swift
 //  SpendLess
 //
-//  Created by Andres Cordón on 4/2/25.
+//  Created by Andres Cordón on 5/2/25.
 //
 
 import SwiftUI
 
-struct CreatePinView: View {
+struct RepeatPinView: View {
     @Binding var path: [Screen]
-    @State var viewModel: CreatePinViewModel = CreatePinViewModel()
+    @State var viewModel: RepeatPinViewModel = RepeatPinViewModel()
     
     var body: some View {
         VStack {
             ZStack(alignment: .top) {
                 BackButton {
-                    if !path.isEmpty {
-                        path.removeLast()
-                    }
+                    viewModel.backButtonPressed()
                 }
 
                 AppIcon()
@@ -26,13 +24,13 @@ struct CreatePinView: View {
             
             Spacer().frame(height: 20)
             
-            Text("Create PIN")
+            Text("Repeat your PIN")
                 .modifier(HeadlineMedium())
                 .foregroundStyle(Color("OnSurface"))
             
             Spacer().frame(height: 8)
             
-            Text("Use PIN to login to your account")
+            Text("Enter your PIN again")
                 .modifier(BodyMedium(color: Color("OnSurfaceVariant")))
             
             Spacer().frame(height: 36)
@@ -48,8 +46,12 @@ struct CreatePinView: View {
             )
                 
             Spacer()
+            
+            if viewModel.showError {
+                Banner(error: "Pins don´t match. Try again")
+                    .padding(.bottom, 24)
+            }
         }
-        .frame(maxWidth: .infinity)
         .ignoresSafeArea(.keyboard, edges: .bottom)
         .ignoresSafeArea(edges: .bottom)
         .background(Color("Background"))
@@ -57,12 +59,9 @@ struct CreatePinView: View {
         .onAppear {
             viewModel.path = $path
         }
-        .onDisappear {
-            viewModel.reset()
-        }
     }
 }
 
 #Preview {
-    CreatePinView(path: .constant([]))
+    RepeatPinView(path: .constant([]))
 }

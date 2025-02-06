@@ -16,6 +16,7 @@ import Foundation
     var errorMessage: String = ""
     
     func checkUsername() {
+        navigateToPinScreen = false
         errorMessage = ""
         
         if (username.count < 3) {
@@ -45,4 +46,10 @@ import Foundation
         }
     }
     
+    func reset() {
+        username = ""
+        showError = false
+        navigateToPinScreen = false
+        errorMessage = ""
+    }
 }
