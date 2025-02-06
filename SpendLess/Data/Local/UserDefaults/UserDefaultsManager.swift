@@ -18,13 +18,17 @@ class UserDefaultsManager {
         }
     }
     
-    var code: String? {
+    var pin: String? {
         set {
-            UserDefaults.standard.set(Utils.shared.encrypt(text: newValue ?? ""), forKey: "code")
+            UserDefaults.standard.set(Utils.shared.encrypt(text: newValue ?? ""), forKey: "pin")
         }
         get {
-            return Utils.shared.decrypt(data: getEncryptedData(key: "code") ?? Data())
+            return Utils.shared.decrypt(data: getEncryptedData(key: "pin") ?? Data())
         }
+    }
+    
+    func resetPin() {
+        UserDefaults.standard.set(Utils.shared.encrypt(text: ""), forKey: "pin")
     }
     
     func getEncryptedData(key: String) -> Data? {

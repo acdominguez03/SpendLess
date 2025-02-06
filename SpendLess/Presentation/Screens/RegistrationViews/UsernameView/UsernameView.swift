@@ -11,7 +11,7 @@ struct UsernameView: View {
     @State var viewModel: UsernameViewModel = UsernameViewModel()
     @FocusState private var isTextFieldFocused: Bool
     @StateObject private var keyboardObserver = KeyboardObserver()
-    @State private var path = NavigationPath()
+    @State private var path: [Screen] = []
     
     var body: some View {
         NavigationStack(path: $path) {
@@ -44,7 +44,8 @@ struct UsernameView: View {
                         .clipShape(RoundedRectangle(cornerRadius: 16))
                         .multilineTextAlignment(.center)
                         .tint(Color("PrimaryApp"))
-                        .textInputAutocapitalization(TextInputAutocapitalization.never)
+                        .autocorrectionDisabled(true)
+                        .textInputAutocapitalization(.never)
                         .focused($isTextFieldFocused)
                 }
                 
@@ -57,6 +58,11 @@ struct UsernameView: View {
                     onClick: {
                         isTextFieldFocused = false
                         viewModel.checkUsername()
+                        if viewModel.navigateToPinScreen {
+                            DispatchQueue.main.async {
+                                path.append(Screen.PinScreen)
+                            }
+                        }
                     }
                 )
                 
@@ -82,8 +88,20 @@ struct UsernameView: View {
             .onTapGesture {
                 isTextFieldFocused = false
             }
-            .navigationDestination(isPresented: $viewModel.navigateToPinScreen) {
-                CreatePinView(path: $path)
+            .navigationDestination(for: Screen.self) { screen in
+                switch screen {
+                case .PinScreen:
+                    CreatePinView(path: $path)
+                case .RepeatPinScreen:
+                    RepeatPinView(path: $path)
+                case .PreferencesScreen:
+                    PreferencesView()
+                }
+            }
+            .onDisappear {
+                DispatchQueue.main.async {
+                    viewModel.reset()
+                }
             }
         }
     }

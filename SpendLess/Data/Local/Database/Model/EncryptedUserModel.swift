@@ -12,7 +12,7 @@ import CryptoKit
 @Model
 final class EncryptedUserModel {
     @Attribute(.unique) var username: Data
-    var code: Data
+    var pin: Data
     var lastConnection: Data
     var expensesFormat: Data
     var currency: Data
@@ -23,7 +23,7 @@ final class EncryptedUserModel {
     
     init(username: String, code: String, lastConnection: Date, expensesFormat: ExpensesFormat, currency: Currency, decimalSeparator: DecimalSeparator, thousandsSeparator: ThousandsSeparator, sessionExpirityDuration: SessionExpiryDuration, lockedOutDuration: LockedOutDuration) {
         self.username = Utils.shared.encrypt(text: username) ?? Data()
-        self.code = Utils.shared.encrypt(text: code) ?? Data()
+        self.pin = Utils.shared.encrypt(text: code) ?? Data()
         self.lastConnection = Utils.shared.encrypt(text: Utils.shared.dateToString(lastConnection)) ?? Data()
         self.expensesFormat = Utils.shared.encrypt(text: expensesFormat.rawValue) ?? Data()
         self.currency = Utils.shared.encrypt(text: currency.rawValue) ?? Data()
@@ -35,7 +35,7 @@ final class EncryptedUserModel {
     
     func decryptAll() -> UserModel? {
         guard let username = Utils.shared.decrypt(data: username),
-            let code = Utils.shared.decrypt(data: code),
+            let pin = Utils.shared.decrypt(data: pin),
             let expensesFormat = Utils.shared.decrypt(data: expensesFormat),
             let currency = Utils.shared.decrypt(data: currency),
             let decimalSeparator = Utils.shared.decrypt(data: decimalSeparator),
@@ -47,7 +47,7 @@ final class EncryptedUserModel {
         
         return UserModel(
             username: username,
-            code: code,
+            pin: pin,
             lastConnection: getLastConnection() ?? Date.now,
             expensesFormat: ExpensesFormat(rawValue: expensesFormat) ?? ExpensesFormat.less,
             currency: Currency(rawValue: currency) ?? Currency.euro,
@@ -68,7 +68,7 @@ final class EncryptedUserModel {
     }
     
     func getCode() -> String? {
-        return Utils.shared.decrypt(data: code)
+        return Utils.shared.decrypt(data: pin)
     }
     
     
@@ -76,7 +76,7 @@ final class EncryptedUserModel {
 
 struct UserModel {
     var username: String
-    var code: String
+    var pin: String
     var lastConnection: Date
     var expensesFormat: ExpensesFormat
     var currency: Currency
