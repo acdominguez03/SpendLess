@@ -47,6 +47,12 @@ struct UsernameView: View {
                         .autocorrectionDisabled(true)
                         .textInputAutocapitalization(.never)
                         .focused($isTextFieldFocused)
+                        .onSubmit {
+                            isTextFieldFocused = false
+                            Task {
+                                await viewModel.checkUsername()
+                            }
+                        }
                 }
                 
                 Spacer().frame(height: 16)
@@ -57,14 +63,20 @@ struct UsernameView: View {
                     isDisabled: viewModel.username.isEmpty,
                     onClick: {
                         isTextFieldFocused = false
-                        viewModel.checkUsername()
+                        Task {
+                            await viewModel.checkUsername()
+                        }
                     }
                 )
                 
                 Spacer().frame(height: 40)
                 
-                Text("Already have an account?")
-                    .modifier(TitleMedium(color: Color("PrimaryApp")))
+                Button {
+                    path.append(Screen.LoginScreen)
+                } label: {
+                    Text("Already have an account?")
+                        .modifier(TitleMedium(color: Color("PrimaryApp")))
+                }
                 
                 Spacer()
                 
@@ -91,6 +103,10 @@ struct UsernameView: View {
                     RepeatPinView(path: $path)
                 case .OnboardingPreferencesScreen:
                     OnboardingPreferencesView(path: $path)
+                case .LoginScreen:
+                    LoginView(path: $path)
+                case .DashboardScreen:
+                    DashboardView(path: $path)
                 }
             }
             .onAppear {

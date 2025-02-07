@@ -20,7 +20,7 @@ import SwiftUI
         pin += newValue
         
         if pin.count == 5 {
-            if pin == UserDefaultsManager.shared.pin {
+            if Utils.shared.hashValue(value: pin) == UserDefaultsManager.shared.pin {
                 DispatchQueue.main.async {
                     self.path?.wrappedValue.append(Screen.OnboardingPreferencesScreen)
                 }

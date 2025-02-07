@@ -11,8 +11,8 @@ import CryptoKit
 
 @Model
 final class EncryptedUserModel {
-    @Attribute(.unique) var username: Data
-    var pin: Data
+    @Attribute(.unique) var username: String
+    var pin: String
     var lastConnection: Data
     var expensesFormat: Data
     var currency: Data
@@ -21,9 +21,9 @@ final class EncryptedUserModel {
     var sessionExpirityDuration: Data
     var lockedOutDuration: Data
     
-    init(username: String, code: String, lastConnection: Date, expensesFormat: ExpensesFormat, currency: Currency, decimalSeparator: DecimalSeparator, thousandsSeparator: ThousandsSeparator, sessionExpirityDuration: SessionExpiryDuration, lockedOutDuration: LockedOutDuration) {
-        self.username = Utils.shared.encrypt(text: username) ?? Data()
-        self.pin = Utils.shared.encrypt(text: code) ?? Data()
+    init(username: String, pin: String, lastConnection: Date, expensesFormat: ExpensesFormat, currency: Currency, decimalSeparator: DecimalSeparator, thousandsSeparator: ThousandsSeparator, sessionExpirityDuration: SessionExpiryDuration, lockedOutDuration: LockedOutDuration) {
+        self.username = username
+        self.pin = pin
         self.lastConnection = Utils.shared.encrypt(text: Utils.shared.dateToString(lastConnection)) ?? Data()
         self.expensesFormat = Utils.shared.encrypt(text: expensesFormat.rawValue) ?? Data()
         self.currency = Utils.shared.encrypt(text: String(currency.rawValue)) ?? Data()
@@ -34,9 +34,7 @@ final class EncryptedUserModel {
     }
     
     func decryptAll() -> UserModel? {
-        guard let username = Utils.shared.decrypt(data: username),
-            let pin = Utils.shared.decrypt(data: pin),
-            let expensesFormat = Utils.shared.decrypt(data: expensesFormat),
+        guard let expensesFormat = Utils.shared.decrypt(data: expensesFormat),
             let currency = Utils.shared.decrypt(data: currency),
             let decimalSeparator = Utils.shared.decrypt(data: decimalSeparator),
             let thousandsSeparator = Utils.shared.decrypt(data: thousandsSeparator),
@@ -46,6 +44,7 @@ final class EncryptedUserModel {
         }
         
         return UserModel(
+            id: UUID(),
             username: username,
             pin: pin,
             lastConnection: getLastConnection() ?? Date.now,
@@ -58,30 +57,21 @@ final class EncryptedUserModel {
         )
     }
     
-    func getUsername() -> String? {
-        return Utils.shared.decrypt(data: username)
-    }
-    
     func getLastConnection() -> Date? {
         guard let date = Utils.shared.decrypt(data: lastConnection) else { return nil }
         return Utils.shared.stringToDate(date)
     }
-    
-    func getCode() -> String? {
-        return Utils.shared.decrypt(data: pin)
-    }
-    
-    
 }
 
-struct UserModel {
-    var username: String
-    var pin: String
-    var lastConnection: Date
-    var expensesFormat: ExpensesFormat
-    var currency: Currency
-    var decimalSeparator: DecimalSeparator
-    var thousandsSeparator: ThousandsSeparator
-    var sessionExpirityDuration: SessionExpiryDuration
-    var lockedOutDuration: LockedOutDuration
+struct UserModel: Identifiable {
+    var id: UUID = UUID()
+    var username: String = ""
+    var pin: String = ""
+    var lastConnection: Date = Date.now
+    var expensesFormat: ExpensesFormat = ExpensesFormat.less
+    var currency: Currency = Currency.euro
+    var decimalSeparator: DecimalSeparator = DecimalSeparator.comma
+    var thousandsSeparator: ThousandsSeparator = ThousandsSeparator.point
+    var sessionExpirityDuration: SessionExpiryDuration = SessionExpiryDuration.short
+    var lockedOutDuration: LockedOutDuration = LockedOutDuration.short
 }

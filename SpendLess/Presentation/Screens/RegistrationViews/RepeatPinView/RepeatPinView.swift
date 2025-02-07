@@ -52,7 +52,6 @@ struct RepeatPinView: View {
                     .padding(.bottom, 24)
             }
         }
-        .ignoresSafeArea(.keyboard, edges: .bottom)
         .ignoresSafeArea(edges: .bottom)
         .background(Color("Background"))
         .navigationBarBackButtonHidden()
