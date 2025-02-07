@@ -29,6 +29,12 @@ import SwiftUI
         pin.removeLast()
     }
     
+    func backButtonPressed() {
+        DispatchQueue.main.async {
+            self.path?.wrappedValue.removeLast()
+        }
+    }
+    
     func reset() {
         pin = ""
     }

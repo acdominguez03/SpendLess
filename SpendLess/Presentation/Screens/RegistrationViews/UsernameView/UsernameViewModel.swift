@@ -6,17 +6,17 @@
 //
 
 import Foundation
+import SwiftUICore
 
 @Observable
 @MainActor final class UsernameViewModel {
+    var path: Binding<[Screen]>?
     var username: String = ""
-    var navigateToPinScreen: Bool = false
     
     var showError: Bool = false
     var errorMessage: String = ""
     
     func checkUsername() {
-        navigateToPinScreen = false
         errorMessage = ""
         
         if (username.count < 3) {
@@ -39,8 +39,10 @@ import Foundation
                     showError = true
                 } else {
                     showError = false
-                    UserDefaultsManager.shared.username = username
-                    navigateToPinScreen = true
+                    DispatchQueue.main.async {
+                        UserDefaultsManager.shared.username = self.username
+                        self.path?.wrappedValue.append(Screen.CreatePinScreen)
+                    }
                 }
             }
         }
@@ -49,7 +51,6 @@ import Foundation
     func reset() {
         username = ""
         showError = false
-        navigateToPinScreen = false
         errorMessage = ""
     }
 }

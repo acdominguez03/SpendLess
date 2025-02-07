@@ -26,7 +26,7 @@ final class EncryptedUserModel {
         self.pin = Utils.shared.encrypt(text: code) ?? Data()
         self.lastConnection = Utils.shared.encrypt(text: Utils.shared.dateToString(lastConnection)) ?? Data()
         self.expensesFormat = Utils.shared.encrypt(text: expensesFormat.rawValue) ?? Data()
-        self.currency = Utils.shared.encrypt(text: currency.rawValue) ?? Data()
+        self.currency = Utils.shared.encrypt(text: String(currency.rawValue)) ?? Data()
         self.decimalSeparator = Utils.shared.encrypt(text: decimalSeparator.rawValue) ?? Data()
         self.thousandsSeparator = Utils.shared.encrypt(text: thousandsSeparator.rawValue) ?? Data()
         self.sessionExpirityDuration = Utils.shared.encrypt(text: String(sessionExpirityDuration.rawValue)) ?? Data()
@@ -50,7 +50,7 @@ final class EncryptedUserModel {
             pin: pin,
             lastConnection: getLastConnection() ?? Date.now,
             expensesFormat: ExpensesFormat(rawValue: expensesFormat) ?? ExpensesFormat.less,
-            currency: Currency(rawValue: currency) ?? Currency.euro,
+            currency: Currency(rawValue: Int(currency) ?? 0) ?? Currency.euro,
             decimalSeparator: DecimalSeparator(rawValue: decimalSeparator) ?? DecimalSeparator.comma,
             thousandsSeparator: ThousandsSeparator(rawValue: thousandsSeparator) ?? ThousandsSeparator.point,
             sessionExpirityDuration: SessionExpiryDuration(rawValue: Int(sessionExpirityDuration) ?? 5) ?? SessionExpiryDuration.short,

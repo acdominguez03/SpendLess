@@ -6,7 +6,7 @@
 //
 
 enum Screen: Hashable {
-    case PinScreen
+    case CreatePinScreen
     case RepeatPinScreen
-    case PreferencesScreen
+    case OnboardingPreferencesScreen
 }
