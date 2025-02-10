@@ -47,9 +47,6 @@ struct CreatePinView: View {
                 
             Spacer()
         }
-        .frame(maxWidth: .infinity)
-        .ignoresSafeArea(.keyboard, edges: .bottom)
-        .ignoresSafeArea(edges: .bottom)
         .background(Color("Background"))
         .navigationBarBackButtonHidden()
         .onAppear {

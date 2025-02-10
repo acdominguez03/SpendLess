@@ -91,8 +91,8 @@ import SwiftUI
     
     func onSaveButtonClicked() async {
         let encryptedUserModel = EncryptedUserModel(
-            username: UserDefaultsManager.shared.username ?? "",
-            code: UserDefaultsManager.shared.pin ?? "",
+            username: UserDefaultsManager.shared.username,
+            pin: UserDefaultsManager.shared.pin,
             lastConnection: Date.now,
             expensesFormat: expensesFormat,
             currency: currency,

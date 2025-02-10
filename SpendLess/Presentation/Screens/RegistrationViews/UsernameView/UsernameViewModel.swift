@@ -16,7 +16,13 @@ import SwiftUICore
     var showError: Bool = false
     var errorMessage: String = ""
     
-    func checkUsername() {
+    let checkUsernameAlreadyExistUseCase: CheckUsernameAlreadyExistUseCase
+    
+    init() {
+        self.checkUsernameAlreadyExistUseCase = CheckUsernameAlreadyExistUseCase(repository: UserRepositoryImpl.shared())
+    }
+    
+    func checkUsername() async {
         errorMessage = ""
         
         if (username.count < 3) {
@@ -34,15 +40,23 @@ import SwiftUICore
                 errorMessage = "Only alphanumeric and digits are allowed"
                 showError = true
             } else {
-                if (username.contains(" ")) {
-                    errorMessage = "No space characters are allowed"
-                    showError = true
-                } else {
-                    showError = false
-                    DispatchQueue.main.async {
-                        UserDefaultsManager.shared.username = self.username
-                        self.path?.wrappedValue.append(Screen.CreatePinScreen)
+                let result = await checkUsernameAlreadyExistUseCase.execute(username: Utils.shared.hashValue(value: username))
+                
+                switch result {
+                case .success(let alreadyExist):
+                    if alreadyExist {
+                        showError = true
+                        errorMessage = "This username already exist"
+                    } else {
+                        showError = false
+                        DispatchQueue.main.async {
+                            UserDefaultsManager.shared.username = self.username
+                            self.path?.wrappedValue.append(Screen.CreatePinScreen)
+                        }
                     }
+                case .failure(let error):
+                    showError = true
+                    errorMessage = error.localizedDescription
                 }
             }
         }

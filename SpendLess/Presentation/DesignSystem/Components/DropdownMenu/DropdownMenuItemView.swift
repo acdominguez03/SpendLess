@@ -34,7 +34,7 @@ struct DropdownMenuItemView: View {
                 
                 Spacer()
                 
-                Image("Checkmark")
+                Image("CheckMark")
                     .padding(.trailing, 12)
                     .opacity(selectionId == item.id ? 1 : 0)
             }
