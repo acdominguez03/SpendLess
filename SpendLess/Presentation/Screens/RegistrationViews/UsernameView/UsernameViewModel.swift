@@ -19,7 +19,7 @@ import SwiftUICore
     let checkUsernameAlreadyExistUseCase: CheckUsernameAlreadyExistUseCase
     
     init() {
-        self.checkUsernameAlreadyExistUseCase = CheckUsernameAlreadyExistUseCase(repository: UserRepositoryImpl.shared())
+        self.checkUsernameAlreadyExistUseCase = CheckUsernameAlreadyExistUseCase(repository: UserRepositoryImpl.shared)
     }
     
     func checkUsername() async {

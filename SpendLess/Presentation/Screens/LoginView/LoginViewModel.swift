@@ -6,7 +6,8 @@
 //
 
 import Foundation
-import SwiftUICore
+import SwiftUI
+import SwiftData
 
 @Observable
 @MainActor final class LoginViewModel {
@@ -21,9 +22,9 @@ import SwiftUICore
     let loginUseCase: LoginUseCaseProtocol
     let updateLastUserConnectionUseCase: UpdateLastUserConnectionUseCase
     
-    init() {
-        self.loginUseCase = LoginUseCase(repository: UserRepositoryImpl.shared())
-        self.updateLastUserConnectionUseCase = UpdateLastUserConnectionUseCase(repository: UserRepositoryImpl.shared())
+    init(loginUseCase: LoginUseCase, updateLastUserConnectionUseCase: UpdateLastUserConnectionUseCase) {
+        self.loginUseCase = loginUseCase
+        self.updateLastUserConnectionUseCase = updateLastUserConnectionUseCase
     }
     
     func loginUser() async {
@@ -40,6 +41,7 @@ import SwiftUICore
                 case .success(let isUpdated):
                     if isUpdated {
                         DispatchQueue.main.async {
+                            self.path?.wrappedValue.removeAll()
                             self.path?.wrappedValue.append(Screen.DashboardScreen)
                         }
                     }

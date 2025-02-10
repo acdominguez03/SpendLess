@@ -16,9 +16,8 @@ struct LoginView: View {
     
     @Binding var path: [Screen]
     
-    @State private var viewModel: LoginViewModel = LoginViewModel()
+    @State private var viewModel: LoginViewModel = LoginViewModel(loginUseCase: LoginUseCase(repository: UserRepositoryImpl.shared), updateLastUserConnectionUseCase: UpdateLastUserConnectionUseCase(repository: UserRepositoryImpl.shared))
     @FocusState private var focusedField: Field?
-    @StateObject private var keyboardObserver = KeyboardObserver()
     
     var body: some View {
         VStack {
@@ -51,7 +50,7 @@ struct LoginView: View {
                         focusedField = .pin
                     }
                 
-                TextField("PIN", text: $viewModel.pin)
+                SecureField("PIN", text: $viewModel.pin)
                     .textFieldStyle(LoginTextFieldStyle(isFocused: _focusedField))
                     .background(
                         RoundedRectangle(cornerRadius: 16)
@@ -90,10 +89,8 @@ struct LoginView: View {
             Spacer()
             
             if viewModel.showError {
-                Banner(error: viewModel.errorMesage)
-                    .padding(.bottom, 24)
-                    .offset(y: focusedField != nil ? -keyboardObserver.keyboardHeight + 24 : 0)
-                    .animation(.easeInOut, value: focusedField)
+                Banner(showError: $viewModel.showError, error: viewModel.errorMesage)
+                    .KeyboardAwarePadding()
             }
         }
         .padding(.horizontal, 16)

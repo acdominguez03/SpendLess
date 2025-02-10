@@ -1,30 +1,25 @@
 //
-//  CustomSelector.swift
+//  TransactionSelector.swift
 //  SpendLess
 //
-//  Created by Andres Cordón on 7/2/25.
+//  Created by Andres Cordón on 11/2/25.
 //
 
 import SwiftUI
 
-struct CustomSelector: View {
+struct TransactionSelector: View {
     @Binding var valueSelected: String
     
-    let title: String
-    var values: [String] = ["-$10", "($10)"]
+    let icons: [String] = ["Expenses", "Income"]
+    var values: [String] = ["Expense", "Income"]
+    
     var onValueSelectorClicked: (String) -> Void = {_ in}
     
     var body: some View {
         VStack(alignment: .leading) {
-            if !title.isEmpty {
-                Text(title)
-                    .modifier(LabelSmall(color: Color("OnSurface")))
-                    .padding(.top, 16)
-                    .padding(.bottom, 4)
-            }
             
             HStack(spacing: 0) {
-                ForEach(values, id: \.self) { value in
+                ForEach(Array(values.enumerated()), id: \.offset) { index, value in
                     ZStack {
                         Rectangle()
                             .fill(Color("PrimaryContainer").opacity(0.08))
@@ -41,9 +36,16 @@ struct CustomSelector: View {
                                 }
                             }
                     }.overlay {
-                        HStack(spacing: 3) {
+                        HStack(spacing: 7.5) {
+                            if !icons.isEmpty {
+                                Image(icons[index])
+                                    .renderingMode(.template)
+                                    .frame(width: 15, height: 9)
+                                    .foregroundStyle(valueSelected == value ? Color("PrimaryApp") : Color("OnPrimaryFixed"))
+                            }
+                            
                             Text(value)
-                                .modifier(TitleMedium(color: valueSelected == value ? Color("OnSurface") : Color("OnPrimaryFixed")))
+                                .modifier(TitleMedium(color: valueSelected == value ? Color("PrimaryApp") : Color("OnPrimaryFixed")))
                         }
                     }
                 }
@@ -58,5 +60,5 @@ struct CustomSelector: View {
 }
 
 #Preview {
-    CustomSelector(valueSelected: .constant(""), title: "")
+    TransactionSelector(valueSelected: .constant(""))
 }

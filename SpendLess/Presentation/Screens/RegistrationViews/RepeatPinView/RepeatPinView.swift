@@ -48,7 +48,7 @@ struct RepeatPinView: View {
             Spacer()
             
             if viewModel.showError {
-                Banner(error: "Pins don´t match. Try again")
+                Banner(showError: $viewModel.showError, error: "Pins don´t match. Try again")
                     .padding(.bottom, 24)
             }
         }

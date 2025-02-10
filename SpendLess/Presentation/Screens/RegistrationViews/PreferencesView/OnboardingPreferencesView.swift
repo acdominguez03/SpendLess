@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct OnboardingPreferencesView: View {
     @Binding var path: [Screen]
@@ -66,22 +67,27 @@ struct OnboardingPreferencesView: View {
                             .padding(.top, 16)
                             .padding(.bottom, 4)
                         
-                        CustomDropdownMenu(items: Currency.allCases.map({ currency in
-                            DropdownItem(
-                                id: currency.rawValue,
-                                title: currency.name,
-                                icon: currency.icon,
-                                onSelect: { id in
-                                    viewModel.changeCurrencyValue(id: id)
-                                }
-                            )
-                        }))
+                        CustomDropdownMenu(
+                            selectionTitle: Currency.euro.name,
+                            selectionIcon: Currency.euro.icon,
+                            items: Currency.allCases.map({ currency in
+                                DropdownItem(
+                                    id: currency.rawValue,
+                                    title: currency.name,
+                                    icon: currency.icon,
+                                    onSelect: { id in
+                                        viewModel.changeCurrencyValue(id: id)
+                                    }
+                                )
+                            }),
+                            customDropdownMenuType: CustomDropdownMenuTypes.currency
+                        )
                         .zIndex(10)
                         
                         CustomSelector(
                             valueSelected: .constant(viewModel.decimalSeparator.example),
                             title: "Decimal separator",
-                            values: DecimalSeparator.allCases.map{ $0.example },
+                            values: DecimalSeparator.allCases.map { $0.example },
                             onValueSelectorClicked: { value in
                                 viewModel.changeDecimalSeparatorValue(value: value)
                             }

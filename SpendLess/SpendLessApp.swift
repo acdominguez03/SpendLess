@@ -10,24 +10,9 @@ import SwiftData
 
 @main
 struct SpendLessApp: App {
-    var sharedModelContainer: ModelContainer = {
-        let schema = Schema([
-            EncryptedUserModel.self,
-            EncryptedIncomeModel.self,
-            EncryptedExpenseModel.self
-        ])
-
-        do {
-            return try ModelContainer(for: schema)
-        } catch {
-            fatalError("Could not create ModelContainer: \(error)")
-        }
-    }()
-
     var body: some Scene {
         WindowGroup {
             UsernameView()
         }
-        .modelContainer(sharedModelContainer)
     }
 }

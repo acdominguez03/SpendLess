@@ -9,12 +9,12 @@ import Foundation
 class UserDefaultsManager {
     static let shared = UserDefaultsManager()
     
-    var username: String {
+    var username: String? {
         set {
-            UserDefaults.standard.set(Utils.shared.hashValue(value: newValue), forKey: "username")
+            UserDefaults.standard.set(Utils.shared.encrypt(text: newValue ?? ""), forKey: "username")
         }
         get {
-            return UserDefaults.standard.string(forKey: "username") ?? ""
+            return Utils.shared.decrypt(data: getEncryptedData(key: "username") ?? Data())
         }
     }
     

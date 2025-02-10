@@ -12,6 +12,7 @@ import CryptoKit
 @Model
 final class EncryptedUserModel {
     @Attribute(.unique) var username: String
+    var usernameEncrypted: Data
     var pin: String
     var lastConnection: Data
     var expensesFormat: Data
@@ -22,7 +23,8 @@ final class EncryptedUserModel {
     var lockedOutDuration: Data
     
     init(username: String, pin: String, lastConnection: Date, expensesFormat: ExpensesFormat, currency: Currency, decimalSeparator: DecimalSeparator, thousandsSeparator: ThousandsSeparator, sessionExpirityDuration: SessionExpiryDuration, lockedOutDuration: LockedOutDuration) {
-        self.username = username
+        self.username = Utils.shared.hashValue(value: username)
+        self.usernameEncrypted = Utils.shared.encrypt(text: username) ?? Data()
         self.pin = pin
         self.lastConnection = Utils.shared.encrypt(text: Utils.shared.dateToString(lastConnection)) ?? Data()
         self.expensesFormat = Utils.shared.encrypt(text: expensesFormat.rawValue) ?? Data()
@@ -34,7 +36,8 @@ final class EncryptedUserModel {
     }
     
     func decryptAll() -> UserModel? {
-        guard let expensesFormat = Utils.shared.decrypt(data: expensesFormat),
+        guard let username = Utils.shared.decrypt(data: usernameEncrypted),
+            let expensesFormat = Utils.shared.decrypt(data: expensesFormat),
             let currency = Utils.shared.decrypt(data: currency),
             let decimalSeparator = Utils.shared.decrypt(data: decimalSeparator),
             let thousandsSeparator = Utils.shared.decrypt(data: thousandsSeparator),

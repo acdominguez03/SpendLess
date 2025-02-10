@@ -10,30 +10,31 @@ import SwiftUI
 
 final class UserRepositoryImpl: UserRepository {
     
-    private let modelContainer: ModelContainer
+    private let swiftDataService: SwiftDataService
     private let modelContext: ModelContext
     
     @MainActor
-    init() {
-        self.modelContainer = try! ModelContainer(for: EncryptedUserModel.self)
-        self.modelContext = modelContainer.mainContext
+    static let shared = UserRepositoryImpl()
+    
+    @MainActor
+    private init() {
+        self.swiftDataService = SwiftDataService.shared
+        self.modelContext = swiftDataService.modelContext
     }
     
     @MainActor
-    static func shared() -> UserRepositoryImpl {
-        return UserRepositoryImpl()
-    }
-    
     func createUser(userModel: EncryptedUserModel) async -> Result<UserModel, any Error> {
         modelContext.insert(userModel)
         do {
             try modelContext.save()
             return .success(userModel.decryptAll() ?? UserModel())
+            
         } catch let error as NSError {
             return .failure(error)
         }
     }
     
+    @MainActor
     func getUsers() async -> Result<[EncryptedUserModel], any Error> {
         let descriptor = FetchDescriptor<EncryptedUserModel>(predicate: nil)
         
@@ -45,6 +46,7 @@ final class UserRepositoryImpl: UserRepository {
         }
     }
     
+    @MainActor
     func getUserByUsername(username: String) async -> Result<EncryptedUserModel?, any Error> {
         let descriptor = FetchDescriptor<EncryptedUserModel>(
             predicate: #Predicate{ $0.username == username }
@@ -58,6 +60,7 @@ final class UserRepositoryImpl: UserRepository {
         }
     }
     
+    @MainActor
     func loginUser(username: String, pin: String) async -> Result<EncryptedUserModel?, any Error> {
         let descriptor = FetchDescriptor<EncryptedUserModel>(
             predicate: #Predicate{ $0.username == username && $0.pin == pin }
@@ -71,6 +74,7 @@ final class UserRepositoryImpl: UserRepository {
         }
     }
     
+    @MainActor
     func updateLastUserConnection(username: String) async -> Result<Bool, any Error> {
         let result = await getUserByUsername(username: username)
         

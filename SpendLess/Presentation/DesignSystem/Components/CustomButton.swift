@@ -25,12 +25,13 @@ struct CustomButton: View {
                         .frame(width: 18, height: 18)
                         .tint(isDisabled ? Color("OnSurface").opacity(0.38) : .white)
                 }
-            }.frame(maxWidth: .infinity)
+            }
+            .frame(maxWidth: .infinity)
             .padding(.vertical, 12)
             .background(isDisabled ? Color("OnSurface").opacity(0.12) : Color("PrimaryApp"))
             .clipShape(RoundedRectangle(cornerRadius: 16))
-            .disabled(isDisabled)
         }
+        .disabled(isDisabled)
     }
 }
 
