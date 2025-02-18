@@ -69,7 +69,7 @@ struct DashboardView: View {
                         Spacer()
                         
                         Button {
-                            
+                            path.append(Screen.AllTransactionsScreen)
                         } label: {
                             Text("Show all")
                                 .modifier(TitleMedium(color: Color("PrimaryApp")))

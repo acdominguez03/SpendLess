@@ -105,6 +105,8 @@ struct UsernameView: View {
                     LoginView(path: $path)
                 case .DashboardScreen:
                     DashboardView(path: $path)
+                case .AllTransactionsScreen:
+                    AllTransactionsView(path: $path)
                 }
             }
             .onAppear {
