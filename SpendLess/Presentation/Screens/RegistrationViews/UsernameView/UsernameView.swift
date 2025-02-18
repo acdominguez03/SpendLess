@@ -10,7 +10,6 @@ import SwiftUI
 struct UsernameView: View {
     @State var viewModel: UsernameViewModel = UsernameViewModel()
     @FocusState private var isTextFieldFocused: Bool
-    @StateObject private var keyboardObserver = KeyboardObserver()
     @State private var path: [Screen] = []
     
     var body: some View {
@@ -81,9 +80,8 @@ struct UsernameView: View {
                 Spacer()
                 
                 if viewModel.showError {
-                    Banner(error: viewModel.errorMessage)
-                        .padding(.bottom, 24)
-                        .offset(y: isTextFieldFocused ? -keyboardObserver.keyboardHeight + 24 : 0)
+                    Banner(showError: $viewModel.showError , error: viewModel.errorMessage)
+                        .KeyboardAwarePadding()
                         .animation(.easeInOut, value: isTextFieldFocused)
                 }
             }
@@ -122,5 +120,5 @@ struct UsernameView: View {
 }
 
 #Preview {
-    UsernameView(viewModel: UsernameViewModel())
+    UsernameView()
 }

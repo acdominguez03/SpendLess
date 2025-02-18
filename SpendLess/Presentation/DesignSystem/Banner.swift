@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct Banner: View {
+    @Binding var showError: Bool
     var isError: Bool = true
     var error: String
     
@@ -18,9 +19,17 @@ struct Banner: View {
             .padding(.horizontal, 16)
             .background(isError ? Color("Error") : Color("Success"))
             .foregroundStyle(Color.white)
+            .transition(.move(edge: .bottom))
+            .onAppear {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    withAnimation(.easeOut) {
+                        showError = false
+                    }
+                }
+            }
     }
 }
 
 #Preview {
-    Banner(error: "This username has already been taken")
+    Banner(showError: .constant(false), error: "This username has already been taken")
 }

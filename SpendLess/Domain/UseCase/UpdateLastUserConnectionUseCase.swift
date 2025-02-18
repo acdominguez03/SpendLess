@@ -10,9 +10,9 @@ protocol UpdateLastUserConnectionUseCaseProtocol {
 }
 
 class UpdateLastUserConnectionUseCase: UpdateLastUserConnectionUseCaseProtocol {
-    let repository: UserRepository
+    let repository: UserRepositoryImpl
     
-    init(repository: UserRepository) {
+    init(repository: UserRepositoryImpl) {
         self.repository = repository
     }
     

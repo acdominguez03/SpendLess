@@ -25,8 +25,12 @@ import SwiftUI
     
     let createUserUseCase: CreateUserUseCaseProtocol
     
-    init() {
-        self.createUserUseCase = CreateUserUseCase(repository: UserRepositoryImpl.shared())
+    init(repository: UserRepositoryImpl? = nil) {
+        if repository == nil {
+            self.createUserUseCase = CreateUserUseCase(repository: UserRepositoryImpl.shared)
+        } else {
+            self.createUserUseCase = CreateUserUseCase(repository: repository!)
+        }
         self.exampleText = "-\(currency.icon)10\(thousandsSeparator.rawValue)382\(decimalSeparator.rawValue)45"
         self.buttonDisabled = decimalSeparator.rawValue == thousandsSeparator.rawValue
         self.expensesFormatValue = ExpensesFormat.allCases.map({ expense in
@@ -91,7 +95,7 @@ import SwiftUI
     
     func onSaveButtonClicked() async {
         let encryptedUserModel = EncryptedUserModel(
-            username: UserDefaultsManager.shared.username,
+            username: UserDefaultsManager.shared.username ?? "",
             pin: UserDefaultsManager.shared.pin,
             lastConnection: Date.now,
             expensesFormat: expensesFormat,
@@ -107,6 +111,7 @@ import SwiftUI
         switch result {
         case .success(let user):
             print(user)
+            self.path?.wrappedValue.append(Screen.DashboardScreen)
         case .failure(let error):
             print(error)
         }

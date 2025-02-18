@@ -14,7 +14,6 @@ struct DisplayLarge: ViewModifier {
     func body(content: Content) -> some View {
         content
             .font(Font.custom("Figtree-SemiBold", size: 45))
-            .lineSpacing(52)
             .foregroundStyle(color)
     }
 }
@@ -25,7 +24,6 @@ struct DisplayMedium: ViewModifier {
     func body(content: Content) -> some View {
         content
             .font(Font.custom("Figtree-SemiBold", size: 36))
-            .lineSpacing(44)
             .foregroundStyle(color)
     }
 }
@@ -36,7 +34,6 @@ struct HeadlineLarge: ViewModifier {
     func body(content: Content) -> some View {
         content
             .font(Font.custom("Figtree-SemiBold", size: 32))
-            .lineSpacing(40)
             .foregroundStyle(color)
     }
 }
@@ -58,7 +55,6 @@ struct TitleLarge: ViewModifier {
     func body(content: Content) -> some View {
         content
             .font(Font.custom("Figtree-SemiBold", size: 20))
-            .lineSpacing(26)
             .foregroundStyle(color)
     }
 }
@@ -69,7 +65,6 @@ struct TitleMedium: ViewModifier {
     func body(content: Content) -> some View {
         content
             .font(Font.custom("Figtree-SemiBold", size: 16))
-            .lineSpacing(24)
             .foregroundStyle(color)
     }
 }
@@ -80,7 +75,6 @@ struct TitleSmall: ViewModifier {
     func body(content: Content) -> some View {
         content
             .font(Font.custom("Figtree-Medium", size: 14))
-            .lineSpacing(20)
             .foregroundStyle(color)
     }
 }
@@ -91,7 +85,6 @@ struct LabelMedium: ViewModifier {
     func body(content: Content) -> some View {
         content
             .font(Font.custom("Figtree-Medium", size: 16))
-            .lineSpacing(24)
             .foregroundStyle(color)
     }
 }
@@ -102,7 +95,6 @@ struct LabelSmall: ViewModifier {
     func body(content: Content) -> some View {
         content
             .font(Font.custom("Figtree-Medium", size: 14))
-            .lineSpacing(20)
             .foregroundStyle(color)
     }
 }
@@ -113,7 +105,6 @@ struct BodyMedium: ViewModifier {
     func body(content: Content) -> some View {
         content
             .font(Font.custom("Figtree-Regular", size: 16))
-            .lineSpacing(24)
             .foregroundStyle(color)
     }
 }
@@ -124,7 +115,6 @@ struct BodySmall: ViewModifier {
     func body(content: Content) -> some View {
         content
             .font(Font.custom("Figtree-Regular", size: 14))
-            .lineSpacing(20)
             .foregroundStyle(color)
     }
 }
@@ -135,7 +125,6 @@ struct BodyXSmall: ViewModifier {
     func body(content: Content) -> some View {
         content
             .font(Font.custom("Figtree-Regular", size: 12))
-            .lineSpacing(16)
             .foregroundStyle(color)
     }
 }
