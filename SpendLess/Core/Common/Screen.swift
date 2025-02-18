@@ -11,4 +11,5 @@ enum Screen: Hashable {
     case OnboardingPreferencesScreen
     case LoginScreen
     case DashboardScreen
+    case AllTransactionsScreen
 }
