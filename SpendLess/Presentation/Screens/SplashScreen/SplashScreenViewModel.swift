@@ -10,7 +10,7 @@ import SwiftUI
 
 @Observable
 @MainActor final class SplashScreenViewModel {
-    var path: Binding<[Screen]>?
+    var path: Binding<[Views]>?
     let getLoggedUserUseCase: GetLoggedUserUseCase
     
     init() {
@@ -36,10 +36,10 @@ import SwiftUI
     }
     
     func navigateToDashboardView() {
-        path?.wrappedValue.append(Screen.DashboardScreen)
+        path?.wrappedValue.append(Views.DashboardView)
     }
     
     func navigateToUsernameView() {
-        path?.wrappedValue.append(Screen.UsernameScreen)
+        path?.wrappedValue.append(Views.UsernameView)
     }
 }

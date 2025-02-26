@@ -77,6 +77,20 @@ final class UserRepositoryImpl: UserRepository {
     }
     
     @MainActor
+    func checkIfUsernameAlreadyExist(username: String) async -> Result<Bool, any Error> {
+        let descriptor = FetchDescriptor<UserModel>(
+            predicate: #Predicate{ $0.username == username}
+        )
+        
+        do {
+            let user = try modelContext.fetch(descriptor).first
+            return .success(user != nil)
+        } catch {
+            return .failure(error)
+        }
+    }
+    
+    @MainActor
     func updateLastUserConnection(username: String) async -> Result<Bool, any Error> {
         let result = await getLoggedUser()
         
@@ -84,6 +98,24 @@ final class UserRepositoryImpl: UserRepository {
         case .success(let user):
             if user != nil {
                 user?.lastConnection = Date.now
+                try? modelContext.save()
+                return .success(true)
+            } else {
+                return .success(false)
+            }
+        case .failure(let error):
+            return .failure(error)
+        }
+    }
+    
+    @MainActor
+    func logOut() async -> Result<Bool, any Error> {
+        let result = await getLoggedUser()
+        
+        switch result {
+        case .success(let user):
+            if user != nil {
+                user?.isLogged = false
                 try? modelContext.save()
                 return .success(true)
             } else {

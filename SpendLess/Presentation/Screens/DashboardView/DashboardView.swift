@@ -16,7 +16,7 @@ struct DashboardView: View {
     @State private var currentTransaction: Int = 0
     @State private var isScrolling: Bool = false
     
-    @Binding var path: [Screen]
+    @Binding var path: [Views]
     
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -45,7 +45,7 @@ struct DashboardView: View {
                         
                         
                         Button {
-                            //Ir a settings
+                            viewModel.navigateToSettings()
                         } label: {
                             Image("Settings")
                                 .iconDashboardModifier()
@@ -103,7 +103,7 @@ struct DashboardView: View {
                             Spacer()
                             
                             Button {
-                                path.append(Screen.AllTransactionsScreen)
+                                path.append(Views.AllTransactionsView)
                             } label: {
                                 Text("Show all")
                                     .modifier(TitleMedium(color: Color("PrimaryApp")))

@@ -10,7 +10,7 @@ import SwiftUI
 
 @Observable
 @MainActor final class OnboardingPreferencesViewModel {
-    var path: Binding<[Screen]>?
+    var path: Binding<[Views]>?
     
     var currency = Currency.euro
     var decimalSeparator = DecimalSeparator.comma
@@ -109,10 +109,8 @@ import SwiftUI
         let result = await createUserUseCase.execute(userModel: encryptedUserModel)
         
         switch result {
-        case .success(let user):
-            print(user)
-            UserDefaultsManager.shared.isLogged = true
-            self.path?.wrappedValue.append(Screen.DashboardScreen)
+        case .success(_):
+            self.path?.wrappedValue.append(Views.DashboardView)
         case .failure(let error):
             print(error)
         }

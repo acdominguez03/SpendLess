@@ -10,5 +10,7 @@ protocol UserRepository {
     func getUsers() async -> Result<[UserModel], Error>
     func getLoggedUser() async -> Result<UserModel?, Error>
     func loginUser(username: String, pin: String) async -> Result<UserModel?, Error>
+    func checkIfUsernameAlreadyExist(username: String) async -> Result<Bool, Error>
     func updateLastUserConnection(username: String) async -> Result<Bool, Error>
+    func logOut() async -> Result<Bool, Error>
 }

@@ -10,7 +10,7 @@ import SwiftUI
 
 @Observable
 @MainActor final class RepeatPinViewModel {
-    var path: Binding<[Screen]>?
+    var path: Binding<[Views]>?
     
     var pin: String = ""
     var showError: Bool = false
@@ -22,7 +22,7 @@ import SwiftUI
         if pin.count == 5 {
             if Utils.shared.hashValue(value: pin) == UserDefaultsManager.shared.pin {
                 DispatchQueue.main.async {
-                    self.path?.wrappedValue.append(Screen.OnboardingPreferencesScreen)
+                    self.path?.wrappedValue.append(Views.OnboardingPreferencesView)
                 }
             } else {
                 showError = true

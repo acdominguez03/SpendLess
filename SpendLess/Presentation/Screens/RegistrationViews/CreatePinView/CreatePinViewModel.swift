@@ -12,7 +12,7 @@ import SwiftUI
 @MainActor final class CreatePinViewModel {
     var pin: String = ""
     
-    var path: Binding<[Screen]>?
+    var path: Binding<[Views]>?
     
     func updatePin(newValue: String) {
         
@@ -20,7 +20,7 @@ import SwiftUI
         if pin.count == 5 {
             UserDefaultsManager.shared.pin = pin
             DispatchQueue.main.async {
-                self.path?.wrappedValue.append(Screen.RepeatPinScreen)
+                self.path?.wrappedValue.append(Views.RepeatPinView)
             }
         }
     }

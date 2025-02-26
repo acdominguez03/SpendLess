@@ -10,7 +10,7 @@ import SwiftUI
 struct SplashScreenView: View {
     
     @State private var viewModel: SplashScreenViewModel = SplashScreenViewModel()
-    @State private var path: [Screen] = []
+    @State private var path: [Views] = []
     
     @State private var blurAmount: CGFloat = 10.0
     @State private var opacity: Double = 0.0
@@ -35,22 +35,24 @@ struct SplashScreenView: View {
                         .padding(.top, 20)
                 }
             }
-            .navigationDestination(for: Screen.self) { screen in
+            .navigationDestination(for: Views.self) { screen in
                 switch screen {
-                case .UsernameScreen:
+                case .UsernameView:
                     UsernameView(path: $path)
-                case .CreatePinScreen:
+                case .CreatePinView:
                     CreatePinView(path: $path)
-                case .RepeatPinScreen:
+                case .RepeatPinView:
                     RepeatPinView(path: $path)
-                case .OnboardingPreferencesScreen:
+                case .OnboardingPreferencesView:
                     OnboardingPreferencesView(path: $path)
-                case .LoginScreen:
+                case .LoginView:
                     LoginView(path: $path)
-                case .DashboardScreen:
+                case .DashboardView:
                     DashboardView(path: $path)
-                case .AllTransactionsScreen:
+                case .AllTransactionsView:
                     AllTransactionsView(path: $path)
+                case .SettingsView:
+                    SettingsView(path: $path)
                 }
             }
             .onAppear {

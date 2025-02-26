@@ -10,7 +10,7 @@ import SwiftUI
 
 @Observable
 @MainActor final class AllTransactionsViewModel {
-    var path: Binding<[Screen]>?
+    var path: Binding<[Views]>?
     
     var transactions: [TransactionModel] = []
     var currency: Currency = Currency.franc

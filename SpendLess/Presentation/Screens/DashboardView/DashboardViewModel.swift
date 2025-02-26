@@ -10,7 +10,7 @@ import SwiftUI
 
 @Observable
 @MainActor final class DashboardViewModel {
-    var path: Binding<[Screen]>?
+    var path: Binding<[Views]>?
     
     var user: UserModel?
     var currency: Currency = Currency.dollar
@@ -109,5 +109,12 @@ import SwiftUI
         if let user = user {
             accountBalanceString = Utils.shared.formatNumberWithUserSettings(amount: abs(accountBalance), currency: user.currency, decimalSeparator: user.decimalSeparator, thousandSeparator: user.thousandsSeparator, expensesFormat: accountBalance < 0 ? user.expensesFormat : nil)
         }
+    }
+    
+    func navigateToSettings() {
+        DispatchQueue.main.async {
+            self.path?.wrappedValue.append(Views.SettingsView)
+        }
+       
     }
 }

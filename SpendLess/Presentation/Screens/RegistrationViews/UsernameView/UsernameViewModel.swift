@@ -10,7 +10,7 @@ import SwiftUICore
 
 @Observable
 @MainActor final class UsernameViewModel {
-    var path: Binding<[Screen]>?
+    var path: Binding<[Views]>?
     var username: String = ""
     
     var showError: Bool = false
@@ -40,18 +40,18 @@ import SwiftUICore
                 errorMessage = "Only alphanumeric and digits are allowed"
                 showError = true
             } else {
-                let result = await checkUsernameAlreadyExistUseCase.execute(username: Utils.shared.hashValue(value: username))
+                let result = await checkUsernameAlreadyExistUseCase.execute(username: username)
                 
                 switch result {
-                case .success(let alreadyExist):
-                    if alreadyExist {
+                case .success(let userAlreadyExist):
+                    if userAlreadyExist {
                         showError = true
                         errorMessage = "This username already exist"
                     } else {
                         showError = false
                         DispatchQueue.main.async {
                             UserDefaultsManager.shared.username = self.username
-                            self.path?.wrappedValue.append(Screen.CreatePinScreen)
+                            self.path?.wrappedValue.append(Views.CreatePinView)
                         }
                     }
                 case .failure(let error):

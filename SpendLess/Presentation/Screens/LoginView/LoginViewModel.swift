@@ -11,7 +11,7 @@ import SwiftData
 
 @Observable
 @MainActor final class LoginViewModel {
-    var path: Binding<[Screen]>?
+    var path: Binding<[Views]>?
     
     var username: String = ""
     var pin: String = ""
@@ -28,22 +28,19 @@ import SwiftData
     }
     
     func loginUser() async {
-        let hashedUsername = Utils.shared.hashValue(value: username)
-        
-        let result = await loginUseCase.execute(username: hashedUsername, pin: Utils.shared.hashValue(value: pin))
+        let result = await loginUseCase.execute(username: username, pin: Utils.shared.hashValue(value: pin))
          
         switch result {
         case .success(let loginSuccessful):
             if loginSuccessful {
                 print("Login successful")
-                let updateConnection = await updateLastUserConnectionUseCase.execute(username: hashedUsername)
+                let updateConnection = await updateLastUserConnectionUseCase.execute(username: username)
                 switch updateConnection {
                 case .success(let isUpdated):
                     if isUpdated {
                         DispatchQueue.main.async {
-                            UserDefaultsManager.shared.isLogged = true
                             self.path?.wrappedValue.removeAll()
-                            self.path?.wrappedValue.append(Screen.DashboardScreen)
+                            self.path?.wrappedValue.append(Views.DashboardView)
                         }
                     }
                 case .failure(let error):

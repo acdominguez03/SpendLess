@@ -11,7 +11,7 @@ struct AllTransactionsView: View {
     @State var isShowingBottomSheet: Bool = false
     @State private var viewModel: AllTransactionsViewModel = AllTransactionsViewModel()
     
-    @Binding var path: [Screen]
+    @Binding var path: [Views]
     
     var body: some View {
         ZStack {

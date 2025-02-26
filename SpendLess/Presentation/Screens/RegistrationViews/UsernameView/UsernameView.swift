@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct UsernameView: View {
-    @Binding var path: [Screen]
+    @Binding var path: [Views]
     @State var viewModel: UsernameViewModel = UsernameViewModel()
     @FocusState private var isTextFieldFocused: Bool
     
@@ -21,6 +21,7 @@ struct UsernameView: View {
             Text("Welcome to SpendLess! How can we address you?")
                 .modifier(HeadlineMedium(color: Color("OnSurface")))
                 .multilineTextAlignment(.center)
+                .padding(.horizontal, 26)
             
             Spacer().frame(height: 8)
             
@@ -52,6 +53,7 @@ struct UsernameView: View {
                         }
                     }
             }
+            .padding(.horizontal, 26)
             
             Spacer().frame(height: 16)
             
@@ -66,11 +68,12 @@ struct UsernameView: View {
                     }
                 }
             )
+            .padding(.horizontal, 26)
             
             Spacer().frame(height: 40)
             
             Button {
-                path.append(Screen.LoginScreen)
+                path.append(Views.LoginView)
             } label: {
                 Text("Already have an account?")
                     .modifier(TitleMedium(color: Color("PrimaryApp")))
@@ -87,7 +90,6 @@ struct UsernameView: View {
         .ignoresSafeArea(.keyboard, edges: .bottom)
         .ignoresSafeArea(edges: .bottom)
         .padding(.top, 36)
-        .padding(.horizontal, 26)
         .background(Color("Background"))
         .navigationBarBackButtonHidden()
         .onTapGesture {

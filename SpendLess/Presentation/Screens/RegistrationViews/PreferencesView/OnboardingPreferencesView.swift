@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftData
 
 struct OnboardingPreferencesView: View {
-    @Binding var path: [Screen]
+    @Binding var path: [Views]
     
     @State var viewModel: OnboardingPreferencesViewModel = OnboardingPreferencesViewModel()
     

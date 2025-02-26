@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CreatePinView: View {
-    @Binding var path: [Screen]
+    @Binding var path: [Views]
     @State var viewModel: CreatePinViewModel = CreatePinViewModel()
     
     var body: some View {

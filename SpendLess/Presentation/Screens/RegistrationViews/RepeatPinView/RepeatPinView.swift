@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct RepeatPinView: View {
-    @Binding var path: [Screen]
+    @Binding var path: [Views]
     @State var viewModel: RepeatPinViewModel = RepeatPinViewModel()
     
     var body: some View {

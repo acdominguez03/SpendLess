@@ -14,7 +14,7 @@ enum Field {
 
 struct LoginView: View {
     
-    @Binding var path: [Screen]
+    @Binding var path: [Views]
     
     @State private var viewModel: LoginViewModel = LoginViewModel()
     

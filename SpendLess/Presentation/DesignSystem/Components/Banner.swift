@@ -14,7 +14,7 @@ struct Banner: View {
     
     var body: some View {
         Text(error)
-            .frame(maxWidth: .infinity)
+            .frame(width: UIScreen.main.bounds.width)
             .padding(.vertical, 12)
             .padding(.horizontal, 16)
             .background(isError ? Color("Error") : Color("Success"))
