@@ -5,7 +5,7 @@
 //  Created by Andres Cordón on 4/2/25.
 //
 
-enum DecimalSeparator: String, CaseIterable {
+enum DecimalSeparator: String, CaseIterable, Codable {
     case point = "."
     case comma = ","
     

@@ -6,7 +6,7 @@
 //
 
 //seconds
-enum LockedOutDuration: Int {
+enum LockedOutDuration: Int, Codable {
     case short = 15
     case medium = 30
     case long = 60

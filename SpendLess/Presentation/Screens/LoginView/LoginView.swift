@@ -16,7 +16,8 @@ struct LoginView: View {
     
     @Binding var path: [Screen]
     
-    @State private var viewModel: LoginViewModel = LoginViewModel(loginUseCase: LoginUseCase(repository: UserRepositoryImpl.shared), updateLastUserConnectionUseCase: UpdateLastUserConnectionUseCase(repository: UserRepositoryImpl.shared))
+    @State private var viewModel: LoginViewModel = LoginViewModel()
+    
     @FocusState private var focusedField: Field?
     
     var body: some View {
@@ -59,6 +60,7 @@ struct LoginView: View {
                     )
                     .shadow(color: Color("Shadow"),radius: 20, x: 0, y: 6)
                     .focused($focusedField, equals: .pin)
+                    .keyboardType(.decimalPad)
                     .onSubmit {
                         focusedField = nil
                         Task {

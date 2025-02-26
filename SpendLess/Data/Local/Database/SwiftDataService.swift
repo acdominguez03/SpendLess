@@ -22,9 +22,9 @@ class SwiftDataService {
         isPreviewEnvironment = ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1"
         
         if isPreviewEnvironment {
-            self.modelContainer = try! ModelContainer(for: EncryptedUserModel.self, EncryptedTransactionModel.self, configurations: ModelConfiguration(isStoredInMemoryOnly: true))
+            self.modelContainer = try! ModelContainer(for: UserModel.self, EncryptedTransactionModel.self, configurations: ModelConfiguration(isStoredInMemoryOnly: true))
         } else {
-            self.modelContainer = try! ModelContainer(for: EncryptedUserModel.self, EncryptedTransactionModel.self, configurations: ModelConfiguration(isStoredInMemoryOnly: false))
+            self.modelContainer = try! ModelContainer(for: UserModel.self, EncryptedTransactionModel.self, configurations: ModelConfiguration(isStoredInMemoryOnly: false))
         }
         self.modelContext = modelContainer.mainContext
     }

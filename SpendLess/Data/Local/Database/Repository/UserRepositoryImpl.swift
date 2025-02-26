@@ -23,20 +23,20 @@ final class UserRepositoryImpl: UserRepository {
     }
     
     @MainActor
-    func createUser(userModel: EncryptedUserModel) async -> Result<UserModel, any Error> {
+    func createUser(userModel: UserModel) async -> Result<UserModel, any Error> {
+        userModel.isLogged = true
         modelContext.insert(userModel)
         do {
             try modelContext.save()
-            return .success(userModel.decryptAll() ?? UserModel())
-            
+            return .success(userModel)
         } catch let error as NSError {
             return .failure(error)
         }
     }
     
     @MainActor
-    func getUsers() async -> Result<[EncryptedUserModel], any Error> {
-        let descriptor = FetchDescriptor<EncryptedUserModel>(predicate: nil)
+    func getUsers() async -> Result<[UserModel], any Error> {
+        let descriptor = FetchDescriptor<UserModel>(predicate: nil)
         
         do {
             let users = try modelContext.fetch(descriptor)
@@ -47,9 +47,9 @@ final class UserRepositoryImpl: UserRepository {
     }
     
     @MainActor
-    func getUserByUsername(username: String) async -> Result<EncryptedUserModel?, any Error> {
-        let descriptor = FetchDescriptor<EncryptedUserModel>(
-            predicate: #Predicate{ $0.username == username }
+    func getLoggedUser() async -> Result<UserModel?, any Error> {
+        let descriptor = FetchDescriptor<UserModel>(
+            predicate: #Predicate{ $0.isLogged == true }
         )
         
         do {
@@ -61,13 +61,15 @@ final class UserRepositoryImpl: UserRepository {
     }
     
     @MainActor
-    func loginUser(username: String, pin: String) async -> Result<EncryptedUserModel?, any Error> {
-        let descriptor = FetchDescriptor<EncryptedUserModel>(
+    func loginUser(username: String, pin: String) async -> Result<UserModel?, any Error> {
+        let descriptor = FetchDescriptor<UserModel>(
             predicate: #Predicate{ $0.username == username && $0.pin == pin }
         )
         
         do {
             let user = try modelContext.fetch(descriptor).first
+            user?.isLogged = true
+            try? modelContext.save()
             return .success(user)
         } catch {
             return .failure(error)
@@ -76,12 +78,12 @@ final class UserRepositoryImpl: UserRepository {
     
     @MainActor
     func updateLastUserConnection(username: String) async -> Result<Bool, any Error> {
-        let result = await getUserByUsername(username: username)
+        let result = await getLoggedUser()
         
         switch result {
         case .success(let user):
             if user != nil {
-                user?.lastConnection = Utils.shared.encrypt(text: Utils.shared.dateToString(Date.now)) ?? Data()
+                user?.lastConnection = Date.now
                 try? modelContext.save()
                 return .success(true)
             } else {

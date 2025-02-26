@@ -5,7 +5,7 @@
 //  Created by Andres Cordón on 4/2/25.
 //
 
-enum ThousandsSeparator: String, CaseIterable {
+enum ThousandsSeparator: String, CaseIterable, Codable {
     case point = "."
     case comma = ","
     case space = " "

@@ -7,5 +7,5 @@
 
 protocol TransactionRepository {
     func addTransaction(transaction: EncryptedTransactionModel) async -> Result<EncryptedTransactionModel, Error>
-    func getTransactions() async -> Result<[EncryptedTransactionModel], Error>
+    func getTransactions(username: String) async -> Result<[EncryptedTransactionModel], Error>
 }

@@ -17,6 +17,5 @@ struct LoginTextFieldStyle: TextFieldStyle {
             .tint(Color("PrimaryApp"))
             .autocorrectionDisabled(true)
             .textInputAutocapitalization(.never)
-            
     }
 }

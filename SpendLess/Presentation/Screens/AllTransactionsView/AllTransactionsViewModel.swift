@@ -14,17 +14,20 @@ import SwiftUI
     
     var transactions: [TransactionModel] = []
     var currency: Currency = Currency.franc
+    var decimalSeparator: DecimalSeparator = DecimalSeparator.comma
+    var thousandSeparator: ThousandsSeparator = ThousandsSeparator.space
+    var expensesFormat: ExpensesFormat = ExpensesFormat.less
     
-    let getTransactionsUseCase: GetTransactionsUseCase
-    let getUserByUsernameUseCase: GetUserByUsernameUseCase
+    let getTransactionsByUsernameUseCase: GetTransactionsByUsernameUseCase
+    let getLoggedUserUseCase: GetLoggedUserUseCase
     
     init() {
-        self.getUserByUsernameUseCase = GetUserByUsernameUseCase(repository: UserRepositoryImpl.shared)
-        self.getTransactionsUseCase = GetTransactionsUseCase(repository: TransactionRepositoryImpl.shared)
+        self.getLoggedUserUseCase = GetLoggedUserUseCase(repository: UserRepositoryImpl.shared)
+        self.getTransactionsByUsernameUseCase = GetTransactionsByUsernameUseCase(repository: TransactionRepositoryImpl.shared)
     }
     
     func getTransactions() async {
-        let result = await getTransactionsUseCase.execute()
+        let result = await getTransactionsByUsernameUseCase.execute(username: UserDefaultsManager.shared.username ?? "")
         
         switch result {
         case .success(let transactions):
@@ -35,11 +38,16 @@ import SwiftUI
     }
     
     func getUserData() async {
-        let result = await getUserByUsernameUseCase.execute(username: UserDefaultsManager.shared.username ?? "")
+        let result = await getLoggedUserUseCase.execute()
         
         switch result {
         case .success(let user):
-            self.currency = user.currency
+            if let userNotNull = user {
+                self.currency = userNotNull.currency
+                self.expensesFormat = userNotNull.expensesFormat
+                self.decimalSeparator = userNotNull.decimalSeparator
+                self.thousandSeparator = userNotNull.thousandsSeparator
+            }
         case .failure(let error):
             print(error)
         }

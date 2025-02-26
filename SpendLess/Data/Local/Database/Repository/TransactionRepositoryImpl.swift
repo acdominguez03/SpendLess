@@ -32,8 +32,10 @@ final class TransactionRepositoryImpl: TransactionRepository {
         }
     }
     
-    func getTransactions() async -> Result<[EncryptedTransactionModel], any Error> {
-        let descriptor = FetchDescriptor<EncryptedTransactionModel>(predicate: nil)
+    func getTransactions(username: String) async -> Result<[EncryptedTransactionModel], any Error> {
+        let descriptor = FetchDescriptor<EncryptedTransactionModel>(
+            predicate: #Predicate{ $0.username == username }
+        )
         
         do {
             let transactions = try modelContext.fetch(descriptor)

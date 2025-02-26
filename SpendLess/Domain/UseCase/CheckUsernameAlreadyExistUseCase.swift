@@ -19,7 +19,7 @@ class CheckUsernameAlreadyExistUseCase: CheckUsernameAlreadyExistUseCaseProtocol
     }
     
     func execute(username: String) async -> Result<Bool, any Error> {
-        let result = await repository.getUserByUsername(username: username)
+        let result = await repository.getLoggedUser()
         
         switch result {
         case .success(let user):

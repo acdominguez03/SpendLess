@@ -5,7 +5,7 @@
 //  Created by Andres Cordón on 4/2/25.
 //
 
-enum ExpensesFormat: String, CaseIterable {
+enum ExpensesFormat: String, CaseIterable, Codable {
     case less = "less"
     case parentheses = "parentheses"
     

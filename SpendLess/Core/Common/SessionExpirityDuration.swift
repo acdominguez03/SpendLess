@@ -6,7 +6,7 @@
 //
 
 //Minutes
-enum SessionExpiryDuration: Int {
+enum SessionExpiryDuration: Int, Codable {
     case short = 5
     case medium = 15
     case long = 30
