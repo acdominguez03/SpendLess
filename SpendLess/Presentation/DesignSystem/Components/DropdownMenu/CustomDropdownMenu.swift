@@ -47,6 +47,7 @@ struct CustomDropdownMenu: View {
                 .clipShape(RoundedRectangle(cornerRadius: 16))
                 .shadow(color: Color("Shadow"), radius: 20, x: 0, y: 6)
                 .onTapGesture {
+                    hideKeyboard()
                     isExpanded.toggle()
                 }
                 .onAppear {

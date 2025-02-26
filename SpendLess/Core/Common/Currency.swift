@@ -5,7 +5,7 @@
 //  Created by Andres Cordón on 4/2/25.
 //
 
-enum Currency: Int, CaseIterable {
+enum Currency: Int, CaseIterable, Codable {
     case dollar = 0
     case euro = 1
     case pound = 2

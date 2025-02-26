@@ -10,9 +10,13 @@ import SwiftData
 
 @main
 struct SpendLessApp: App {
+    init() {
+        UIView.appearance().overrideUserInterfaceStyle = .light
+    }
+    
     var body: some Scene {
         WindowGroup {
-            UsernameView()
+            SplashScreenView()
         }
     }
 }

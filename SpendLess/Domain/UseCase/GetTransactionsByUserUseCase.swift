@@ -5,11 +5,11 @@
 //  Created by Andres Cordón on 14/2/25.
 //
 
-protocol GetTransactionsUseCaseProtocol {
-    func execute() async -> Result<[TransactionModel], Error>
+protocol GetTransactionsByUsernameUseCaseProtocol {
+    func execute(username: String) async -> Result<[TransactionModel], Error>
 }
 
-class GetTransactionsUseCase: GetTransactionsUseCaseProtocol {
+class GetTransactionsByUsernameUseCase: GetTransactionsByUsernameUseCaseProtocol {
     
     let repository: TransactionRepository
     
@@ -17,8 +17,8 @@ class GetTransactionsUseCase: GetTransactionsUseCaseProtocol {
         self.repository = repository
     }
     
-    func execute() async -> Result<[TransactionModel], Error> {
-        let result = await repository.getTransactions()
+    func execute(username: String) async -> Result<[TransactionModel], Error> {
+        let result = await repository.getTransactions(username: username)
 
         switch result {
         case .success(let transactions):

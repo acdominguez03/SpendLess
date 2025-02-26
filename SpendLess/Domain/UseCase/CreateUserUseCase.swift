@@ -6,7 +6,7 @@
 //
 
 protocol CreateUserUseCaseProtocol {
-    func execute(userModel: EncryptedUserModel) async -> Result<UserModel, Error>
+    func execute(userModel: UserModel) async -> Result<UserModel, Error>
 }
 
 class CreateUserUseCase: CreateUserUseCaseProtocol {
@@ -17,7 +17,7 @@ class CreateUserUseCase: CreateUserUseCaseProtocol {
         self.repository = repository
     }
     
-    func execute(userModel: EncryptedUserModel) async -> Result<UserModel, Error> {
+    func execute(userModel: UserModel) async -> Result<UserModel, Error> {
         let result = await repository.createUser(userModel: userModel)
 
         switch result {

@@ -94,7 +94,7 @@ import SwiftUI
     }
     
     func onSaveButtonClicked() async {
-        let encryptedUserModel = EncryptedUserModel(
+        let encryptedUserModel = UserModel(
             username: UserDefaultsManager.shared.username ?? "",
             pin: UserDefaultsManager.shared.pin,
             lastConnection: Date.now,
@@ -111,6 +111,7 @@ import SwiftUI
         switch result {
         case .success(let user):
             print(user)
+            UserDefaultsManager.shared.isLogged = true
             self.path?.wrappedValue.append(Screen.DashboardScreen)
         case .failure(let error):
             print(error)

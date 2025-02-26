@@ -27,6 +27,15 @@ class UserDefaultsManager {
         }
     }
     
+    var isLogged: Bool? {
+        set {
+            UserDefaults.standard.set(Utils.shared.encryptBool(value: newValue ?? false), forKey: "isLogged")
+        }
+        get {
+            return Utils.shared.decryptBool(data: getEncryptedData(key: "isLogged") ?? Data())
+        }
+    }
+    
     func resetPin() {
         UserDefaults.standard.set(Utils.shared.encrypt(text: ""), forKey: "pin")
     }

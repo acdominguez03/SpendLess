@@ -22,9 +22,9 @@ import SwiftData
     let loginUseCase: LoginUseCaseProtocol
     let updateLastUserConnectionUseCase: UpdateLastUserConnectionUseCase
     
-    init(loginUseCase: LoginUseCase, updateLastUserConnectionUseCase: UpdateLastUserConnectionUseCase) {
-        self.loginUseCase = loginUseCase
-        self.updateLastUserConnectionUseCase = updateLastUserConnectionUseCase
+    init() {
+        self.loginUseCase = LoginUseCase(repository: UserRepositoryImpl.shared)
+        self.updateLastUserConnectionUseCase = UpdateLastUserConnectionUseCase(repository: UserRepositoryImpl.shared)
     }
     
     func loginUser() async {
@@ -41,6 +41,7 @@ import SwiftData
                 case .success(let isUpdated):
                     if isUpdated {
                         DispatchQueue.main.async {
+                            UserDefaultsManager.shared.isLogged = true
                             self.path?.wrappedValue.removeAll()
                             self.path?.wrappedValue.append(Screen.DashboardScreen)
                         }
